@@ -1,0 +1,563 @@
+/**
+ * Skill Tree node definitions for all four trees.
+ * Each node matches the SkillNode interface from types/engine.ts.
+ * Trees follow the exact progressions specified in ASCENSION_SPEC §7.
+ */
+
+import { SkillNode } from '../types/engine';
+
+// ─── PUSH TREE ────────────────────────────────────────────────────────────────
+// Knee Push-up → Standard → Diamond → Archer → Pseudo Planche → One-Arm
+//                           ↘ Decline → Pike → Handstand → 90°
+
+export const PUSH_NODES: SkillNode[] = [
+  {
+    id: 'push_knee',
+    tree: 'push',
+    name: 'Knee Push-up',
+    tier: 1,
+    spCost: 1,
+    prerequisite: null,
+    verification: { type: 'reps', target: 20 },
+    statReward: { str: 1 },
+    cues: [
+      'Keep hips aligned with shoulders and knees.',
+      'Lower chest to just above the floor.',
+      'Full elbow lockout at the top.',
+      'Core braced throughout.',
+    ],
+  },
+  {
+    id: 'push_standard',
+    tree: 'push',
+    name: 'Standard Push-up',
+    tier: 2,
+    spCost: 1,
+    prerequisite: 'push_knee',
+    verification: { type: 'reps', target: 15 },
+    statReward: { str: 1 },
+    cues: [
+      'Hands shoulder-width apart, fingers forward.',
+      'Body forms a straight plank from head to heels.',
+      'Elbows at ~45° from torso, not flared.',
+      'Chest touches floor, full lockout at top.',
+    ],
+  },
+  {
+    id: 'push_diamond',
+    tree: 'push',
+    name: 'Diamond Push-up',
+    tier: 3,
+    spCost: 2,
+    prerequisite: 'push_standard',
+    verification: { type: 'reps', target: 10 },
+    statReward: { str: 1 },
+    cues: [
+      'Index fingers and thumbs form a diamond shape.',
+      'Keep elbows close to the body.',
+      'Triceps do most of the work.',
+      'Maintain rigid core — no hip sag.',
+    ],
+  },
+  {
+    id: 'push_decline',
+    tree: 'push',
+    name: 'Decline Push-up',
+    tier: 3,
+    spCost: 2,
+    prerequisite: 'push_standard',
+    verification: { type: 'reps', target: 10 },
+    statReward: { str: 1 },
+    cues: [
+      'Feet elevated on bench or box.',
+      'Hands slightly wider than shoulder-width.',
+      'Head travels toward the floor between hands.',
+      'Emphasises upper chest and anterior deltoids.',
+    ],
+  },
+  {
+    id: 'push_archer',
+    tree: 'push',
+    name: 'Archer Push-up',
+    tier: 4,
+    spCost: 2,
+    prerequisite: 'push_diamond',
+    verification: { type: 'reps', target: 8 },
+    statReward: { str: 2 },
+    cues: [
+      'Wide hand placement, one arm straight at the side.',
+      'Lower toward the bent arm.',
+      'Alternate sides each rep or per set.',
+      'Extended arm bears almost no load — keep it straight.',
+    ],
+  },
+  {
+    id: 'push_pike',
+    tree: 'push',
+    name: 'Pike Push-up',
+    tier: 4,
+    spCost: 2,
+    prerequisite: 'push_decline',
+    verification: { type: 'reps', target: 8 },
+    statReward: { str: 1 },
+    cues: [
+      'Hips high in an inverted V.',
+      'Head tracks toward the floor between the hands.',
+      'Shoulders and traps drive the movement.',
+      'Heels stay grounded or slightly raised.',
+    ],
+  },
+  {
+    id: 'push_pseudo_planche',
+    tree: 'push',
+    name: 'Pseudo Planche Push-up',
+    tier: 5,
+    spCost: 3,
+    prerequisite: 'push_archer',
+    verification: { type: 'reps', target: 5 },
+    statReward: { str: 2 },
+    cues: [
+      'Hands forward-facing, below hips.',
+      'Lean body forward so shoulders pass beyond wrists.',
+      'Protract and depress the scapulae.',
+      'Straight-arm lean at 30–45° angle.',
+    ],
+  },
+  {
+    id: 'push_handstand',
+    tree: 'push',
+    name: 'Handstand Push-up',
+    tier: 5,
+    spCost: 3,
+    prerequisite: 'push_pike',
+    verification: { type: 'reps', target: 5 },
+    statReward: { str: 2 },
+    cues: [
+      'Wall-supported: heels lightly touch wall.',
+      'Hands shoulder-width from wall.',
+      'Lower crown toward floor, push tall at top.',
+      'Hollow body position — ribs in, abs tight.',
+    ],
+  },
+  {
+    id: 'push_one_arm',
+    tree: 'push',
+    name: 'One-Arm Push-up',
+    tier: 6,
+    spCost: 4,
+    prerequisite: 'push_pseudo_planche',
+    verification: { type: 'reps', target: 3 },
+    statReward: { str: 3 },
+    cues: [
+      'Feet wider than shoulder-width for base support.',
+      'Resist rotation — body stays square.',
+      'Working arm tracks the mid-line of the body.',
+      'Full range of motion: chest to floor, full lockout.',
+    ],
+  },
+  {
+    id: 'push_90deg',
+    tree: 'push',
+    name: '90° Push-up',
+    tier: 6,
+    spCost: 4,
+    prerequisite: 'push_handstand',
+    verification: { type: 'reps', target: 2 },
+    statReward: { str: 3 },
+    cues: [
+      'From HSPU, press high enough that arms are perpendicular to the floor.',
+      'Requires significant shoulder and tricep strength.',
+      'Control the descent — never drop.',
+      'Parallettes help achieve full range of motion.',
+    ],
+  },
+];
+
+// ─── PULL TREE ────────────────────────────────────────────────────────────────
+// Dead Hang → Australian Pull-up → Negative Pull-up → Standard Pull-up → L-Sit Pull-up → Muscle-up → One-Arm Pull-up
+//                                                      ↘ Chin-up → Weighted Pull-up
+
+export const PULL_NODES: SkillNode[] = [
+  {
+    id: 'pull_dead_hang',
+    tree: 'pull',
+    name: 'Dead Hang',
+    tier: 1,
+    spCost: 1,
+    prerequisite: null,
+    verification: { type: 'seconds', target: 60 },
+    statReward: { str: 1 },
+    cues: [
+      'Grip just outside shoulder-width.',
+      'Shoulders packed down, not shrugged.',
+      'Slight hollow body or neutral spine.',
+      'Breathe steadily — do not hold breath.',
+    ],
+  },
+  {
+    id: 'pull_australian',
+    tree: 'pull',
+    name: 'Australian Pull-up',
+    tier: 2,
+    spCost: 1,
+    prerequisite: 'pull_dead_hang',
+    verification: { type: 'reps', target: 15 },
+    statReward: { str: 1 },
+    cues: [
+      'Bar at waist height, body inclined below it.',
+      'Pull chest to the bar while keeping body rigid.',
+      'Feet flat on the floor.',
+      'Squeeze shoulder blades at the top.',
+    ],
+  },
+  {
+    id: 'pull_negative',
+    tree: 'pull',
+    name: 'Negative Pull-up',
+    tier: 3,
+    spCost: 2,
+    prerequisite: 'pull_australian',
+    verification: { type: 'reps', target: 8 },
+    statReward: { str: 1 },
+    cues: [
+      'Jump or step to the top position (chin over bar).',
+      'Lower yourself in 5–10 seconds — controlled descent.',
+      'Full elbow extension at the bottom.',
+      'Scapulae depress throughout the descent.',
+    ],
+  },
+  {
+    id: 'pull_standard',
+    tree: 'pull',
+    name: 'Standard Pull-up',
+    tier: 4,
+    spCost: 2,
+    prerequisite: 'pull_negative',
+    verification: { type: 'reps', target: 10 },
+    statReward: { str: 2 },
+    cues: [
+      'Overhand (pronated) grip, shoulder-width.',
+      'Start from dead hang — no kipping.',
+      'Pull until chin clears the bar.',
+      'Lower with control to full extension.',
+    ],
+  },
+  {
+    id: 'pull_chinup',
+    tree: 'pull',
+    name: 'Chin-up',
+    tier: 4,
+    spCost: 2,
+    prerequisite: 'pull_negative',
+    verification: { type: 'reps', target: 10 },
+    statReward: { str: 1 },
+    cues: [
+      'Underhand (supinated) grip, shoulder-width.',
+      'Biceps supination increases bicep activation.',
+      'Pull elbows toward hips, not behind torso.',
+      'Full range — dead hang to chin over bar.',
+    ],
+  },
+  {
+    id: 'pull_weighted',
+    tree: 'pull',
+    name: 'Weighted Pull-up',
+    tier: 5,
+    spCost: 3,
+    prerequisite: 'pull_chinup',
+    verification: { type: 'reps', target: 5 },
+    statReward: { str: 2 },
+    cues: [
+      'Add load via belt, vest, or dumbbell between feet.',
+      'Maintain same technique as bodyweight pull-up.',
+      'Recommended starting load: 10–20% bodyweight.',
+      'Log the total load moved.',
+    ],
+  },
+  {
+    id: 'pull_lsit',
+    tree: 'pull',
+    name: 'L-Sit Pull-up',
+    tier: 5,
+    spCost: 3,
+    prerequisite: 'pull_standard',
+    verification: { type: 'reps', target: 5 },
+    statReward: { str: 2, vit: 1 },
+    cues: [
+      'Legs parallel to the floor throughout the rep.',
+      'Requires strong hip flexors and core.',
+      'Pull with legs held rigid — no swinging.',
+      'Full range of motion, controlled descent.',
+    ],
+  },
+  {
+    id: 'pull_muscle_up',
+    tree: 'pull',
+    name: 'Muscle-up',
+    tier: 6,
+    spCost: 4,
+    prerequisite: 'pull_lsit',
+    verification: { type: 'reps', target: 3 },
+    statReward: { str: 3 },
+    cues: [
+      'False grip for bar muscle-up.',
+      'Pull explosively, transitioning chest over the bar.',
+      'Drive elbows down and back at the top.',
+      'Full lockout at the top, controlled lower.',
+    ],
+  },
+  {
+    id: 'pull_one_arm',
+    tree: 'pull',
+    name: 'One-Arm Pull-up',
+    tier: 7,
+    spCost: 4,
+    prerequisite: 'pull_muscle_up',
+    verification: { type: 'reps', target: 1 },
+    statReward: { str: 4 },
+    cues: [
+      'Train one-arm negatives for months before attempting.',
+      'Grip the wrist of the working arm with the free hand for assisted reps.',
+      'Scapula must be packed and depressed throughout.',
+      'Full range: dead hang single-arm to chin over bar.',
+    ],
+  },
+];
+
+// ─── CORE TREE ────────────────────────────────────────────────────────────────
+// Plank → Hollow Body Hold → Leg Raise → Hanging Knee Raise → Hanging Leg Raise → Toes-to-Bar → Front Lever
+
+export const CORE_NODES: SkillNode[] = [
+  {
+    id: 'core_plank',
+    tree: 'core',
+    name: 'Plank',
+    tier: 1,
+    spCost: 1,
+    prerequisite: null,
+    verification: { type: 'seconds', target: 60 },
+    statReward: { vit: 1 },
+    cues: [
+      'Forearms on the floor, elbows below shoulders.',
+      'Body forms a straight line — no hip sag or piking.',
+      'Squeeze glutes and abs, breathe steadily.',
+      'Gaze neutral, neck aligned with spine.',
+    ],
+  },
+  {
+    id: 'core_hollow_body',
+    tree: 'core',
+    name: 'Hollow Body Hold',
+    tier: 2,
+    spCost: 1,
+    prerequisite: 'core_plank',
+    verification: { type: 'seconds', target: 45 },
+    statReward: { vit: 1 },
+    cues: [
+      'Lie on back, arms overhead, legs straight and low.',
+      'Lower back pressed into the floor — no arch.',
+      'Arms and legs hovering — create a "dish" shape.',
+      'This position is the foundation of all gymnastics.',
+    ],
+  },
+  {
+    id: 'core_leg_raise',
+    tree: 'core',
+    name: 'Leg Raise',
+    tier: 3,
+    spCost: 1,
+    prerequisite: 'core_hollow_body',
+    verification: { type: 'reps', target: 15 },
+    statReward: { vit: 1 },
+    cues: [
+      'Lie flat on back, hands under hips for support.',
+      'Raise legs to 90° then lower without touching the floor.',
+      'Keep legs straight and together.',
+      'Slow and controlled — feel the lower abs throughout.',
+    ],
+  },
+  {
+    id: 'core_hanging_knee_raise',
+    tree: 'core',
+    name: 'Hanging Knee Raise',
+    tier: 4,
+    spCost: 2,
+    prerequisite: 'core_leg_raise',
+    verification: { type: 'reps', target: 12 },
+    statReward: { vit: 1, str: 1 },
+    cues: [
+      'Dead hang from bar, knees pulled to chest.',
+      'Avoid swinging — use strict hip flexion.',
+      'Lower legs fully between reps.',
+      'Scapulae engaged throughout.',
+    ],
+  },
+  {
+    id: 'core_hanging_leg_raise',
+    tree: 'core',
+    name: 'Hanging Leg Raise',
+    tier: 5,
+    spCost: 2,
+    prerequisite: 'core_hanging_knee_raise',
+    verification: { type: 'reps', target: 10 },
+    statReward: { vit: 2 },
+    cues: [
+      'Dead hang, raise straight legs to parallel or higher.',
+      'No swinging — pure hip flexion.',
+      'Posterior pelvic tilt at the top for full contraction.',
+      'Slow lower — do not drop legs.',
+    ],
+  },
+  {
+    id: 'core_toes_to_bar',
+    tree: 'core',
+    name: 'Toes-to-Bar',
+    tier: 6,
+    spCost: 3,
+    prerequisite: 'core_hanging_leg_raise',
+    verification: { type: 'reps', target: 8 },
+    statReward: { vit: 2, str: 1 },
+    cues: [
+      'From dead hang, swing toes up to touch the bar.',
+      'Kip allowed but control the return.',
+      'Strict version: no kip, straight-leg raise to bar.',
+      'Requires strong hip flexors and lat engagement.',
+    ],
+  },
+  {
+    id: 'core_front_lever',
+    tree: 'core',
+    name: 'Front Lever',
+    tier: 7,
+    spCost: 4,
+    prerequisite: 'core_toes_to_bar',
+    verification: { type: 'seconds', target: 5 },
+    statReward: { vit: 3, str: 2 },
+    cues: [
+      'Hang from bar, body horizontal and parallel to the floor.',
+      'Depress and retract scapulae — lats are the key.',
+      'Engage core, glutes, quads throughout.',
+      'Train progressions: tuck → adv tuck → straddle → full.',
+    ],
+  },
+];
+
+// ─── LEGS TREE ────────────────────────────────────────────────────────────────
+// Bodyweight Squat → Split Squat → Bulgarian Split Squat → Pistol Squat → Shrimp Squat → Nordic Curl
+
+export const LEGS_NODES: SkillNode[] = [
+  {
+    id: 'legs_squat',
+    tree: 'legs',
+    name: 'Bodyweight Squat',
+    tier: 1,
+    spCost: 1,
+    prerequisite: null,
+    verification: { type: 'reps', target: 30 },
+    statReward: { str: 1 },
+    cues: [
+      'Feet shoulder-width, toes slightly out.',
+      'Squat until thighs are at least parallel.',
+      'Knees track over toes — do not cave inward.',
+      'Chest tall, weight distributed through mid-foot.',
+    ],
+  },
+  {
+    id: 'legs_split_squat',
+    tree: 'legs',
+    name: 'Split Squat',
+    tier: 2,
+    spCost: 1,
+    prerequisite: 'legs_squat',
+    verification: { type: 'reps', target: 20 },
+    statReward: { str: 1, agi: 1 },
+    cues: [
+      'Staggered stance, one foot forward one back.',
+      'Descend until rear knee nearly touches floor.',
+      'Front knee tracks over front toes.',
+      'Keep torso upright — resist forward lean.',
+    ],
+  },
+  {
+    id: 'legs_bulgarian',
+    tree: 'legs',
+    name: 'Bulgarian Split Squat',
+    tier: 3,
+    spCost: 2,
+    prerequisite: 'legs_split_squat',
+    verification: { type: 'reps', target: 10 },
+    statReward: { str: 2 },
+    cues: [
+      'Rear foot elevated on bench, laces down.',
+      'Front foot far enough forward that shin stays vertical.',
+      'Descend straight down — do not lunge forward.',
+      'Hip flexor of the rear leg gets an intense stretch.',
+    ],
+  },
+  {
+    id: 'legs_pistol',
+    tree: 'legs',
+    name: 'Pistol Squat',
+    tier: 4,
+    spCost: 3,
+    prerequisite: 'legs_bulgarian',
+    verification: { type: 'reps', target: 5 },
+    statReward: { str: 2, agi: 1 },
+    cues: [
+      'Stand on one leg, free leg extended forward.',
+      'Descend to full depth — hamstring to calf.',
+      'Heel stays grounded, do not rise onto toes.',
+      'Arms extend forward as counterbalance.',
+    ],
+  },
+  {
+    id: 'legs_shrimp',
+    tree: 'legs',
+    name: 'Shrimp Squat',
+    tier: 5,
+    spCost: 3,
+    prerequisite: 'legs_pistol',
+    verification: { type: 'reps', target: 5 },
+    statReward: { str: 2, agi: 2 },
+    cues: [
+      'Stand on one leg, hold the other ankle behind.',
+      'Descend until rear knee touches the floor.',
+      'The quad of the supporting leg carries full load.',
+      'Harder balance demand than the pistol squat.',
+    ],
+  },
+  {
+    id: 'legs_nordic',
+    tree: 'legs',
+    name: 'Nordic Curl',
+    tier: 6,
+    spCost: 4,
+    prerequisite: 'legs_shrimp',
+    verification: { type: 'reps', target: 3 },
+    statReward: { str: 3, vit: 1 },
+    cues: [
+      'Kneel, ankles secured under a fixed object.',
+      'Lower your body forward using hamstring eccentric strength.',
+      'Catch yourself with hands near the floor.',
+      'Pull yourself back up using hamstrings — use hands to assist if needed.',
+    ],
+  },
+];
+
+// ─── ALL TREES MAP ─────────────────────────────────────────────────────────────
+
+export const ALL_SKILL_TREES = {
+  push: PUSH_NODES,
+  pull: PULL_NODES,
+  core: CORE_NODES,
+  legs: LEGS_NODES,
+} as const;
+
+/** Look up any node by id across all trees */
+export function getNodeById(id: string): SkillNode | undefined {
+  for (const nodes of Object.values(ALL_SKILL_TREES)) {
+    const found = nodes.find((n) => n.id === id);
+    if (found) return found;
+  }
+  return undefined;
+}

@@ -16,10 +16,43 @@
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.omartanah.reprift"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-image",
+      [
+        "expo-gradle-jvmargs",
+        {
+          "xmx": "4096m",
+          "maxMetaspace": "1024m",
+          "jvmArgs": [
+            "-Dorg.gradle.parallel=false",
+            "-Dkotlin.daemon.jvmargs=-Xmx2g"
+          ]
+        }
+      ],
+      [
+        "expo-gradle-properties",
+        {
+          "reactNativeArchitectures": "arm64-v8a"
+        }
+      ]
+    ],
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "afaa6506-9fc5-418b-8568-2551386012a5"
+      }
     }
   }
 }
