@@ -1,0 +1,27 @@
+workflows:
+  android-apk:
+    name: RepRift Android APK
+    instance_type: mac_mini_m1
+    max_build_duration: 120
+    triggering:
+      events:
+        - push
+    environment:
+      node: latest
+      java: 17
+    cache:
+      cache_paths:
+        - ~/.npm
+        - ~/.gradle/caches
+    scripts:
+      - name: Install Dependencies
+        script: |
+          npm install
+          npx expo install --fix
+      - name: Build Android APK
+        script: |
+          npx expo prebuild --platform android --clean
+          cd android
+          ./gradlew assembleDebug --no-daemon
+    artifacts:
+      - android/app/build/outputs/apk/debug/*.apk
