@@ -21,6 +21,19 @@ workflows:
       - name: Build Android APK
         script: |
           npx expo prebuild --platform android --clean
+          
+          # --- BEGIN FIX ---
+          # 1. Force the namespace to match your app.json package
+          sed -i '' 's/namespace ".*"/namespace "com.omartanah.reprift"/' android/app/build.gradle
+          
+          # 2. Enable BuildConfig generation explicitly
+          if ! grep -q 'buildFeatures' android/app/build.gradle; then
+            sed -i '' '/android {/a\
+                buildFeatures { buildConfig true }\
+            ' android/app/build.gradle
+          fi
+          # --- END FIX ---
+          
           cd android
           ./gradlew assembleDebug --no-daemon
     artifacts:
